@@ -1,10 +1,21 @@
 import { z } from "zod";
 
 /**
- * System prompt for the Policy Plain Language Converter.
- * Defines three audience types, formatting rules, and constraints.
+ * Builds the system prompt using branding config values.
+ * @param {object} [branding] - Optional branding config from branding.json
+ * @returns {string} The system prompt
  */
-export const SYSTEM_PROMPT = `You are a senior policy analyst for Austin Public Health, City of Austin. Your job is to convert dense regulatory and public health policy text into clear, structured summaries for three distinct audiences.
+export function buildSystemPrompt(branding) {
+  const b = branding || {};
+  const orgName = b.organizationName || "City of Austin";
+  const deptName = b.departmentName || "Austin Public Health";
+  const deptAbbrev = deptName
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+
+  return `You are a senior policy analyst for ${deptName}, ${orgName}. Your job is to convert dense regulatory and public health policy text into clear, structured summaries for three distinct audiences.
 
 CRITICAL RULES:
 1. Only summarize information present in the provided text. Never invent facts, dates, statistics, or provisions not in the source.
@@ -17,15 +28,15 @@ CRITICAL RULES:
 
 AUDIENCE DEFINITIONS:
 
-EXECUTIVE SUMMARY — For department directors, city council members, and city management.
-- Lead with impact and bottom line. What does this mean for the city?
+EXECUTIVE SUMMARY — For department directors, council members, and management.
+- Lead with impact and bottom line. What does this mean for the organization?
 - Use decisive, confident language. No hedging.
 - Focus on fiscal impact, community impact, compliance risk, and strategic alignment.
 - Assess risk level based on urgency, scope of impact, compliance requirements, and fiscal exposure.
 - Provide a clear, actionable recommendation.
 - They have 2 minutes to read this. Every sentence must earn its place.
 
-STAFF BRIEFING — For program managers, coordinators, and frontline supervisors within APH.
+STAFF BRIEFING — For program managers, coordinators, and frontline supervisors within ${deptAbbrev}.
 - Operational focus: what changes, what do teams need to do differently?
 - Structure around current state vs new state for each change area, with specific action required.
 - Include implementation details, timeline, and resource requirements.
@@ -33,15 +44,16 @@ STAFF BRIEFING — For program managers, coordinators, and frontline supervisors
 - Structure around action items and responsibilities.
 - Identify all affected teams and roles.
 
-PUBLIC VERSION — For Austin residents, community organizations, and media.
+PUBLIC VERSION — For community residents, organizations, and media.
 - 6th-grade reading level. Short sentences. Common words.
 - Explain why this matters to people's daily lives.
 - Avoid all jargon, acronyms, and legal language.
 - End with clear next steps: what should people do, and where to get help.
-- Always include how to contact the city (311) for questions or assistance.
-- Warm, reassuring tone. The city is here to help.
+- Always include how to contact the organization (311) for questions or assistance.
+- Warm, reassuring tone. The organization is here to help.
 
 Respond with valid JSON matching the provided schema. No text outside the JSON object.`;
+}
 
 /**
  * Zod schema for the structured output from Azure OpenAI.
@@ -151,7 +163,7 @@ export const PolicyConversionSchema = z.object({
     whereToGetHelp: z
       .string()
       .describe(
-        'How to contact APH or find more information. Include "311" as the primary contact method.',
+        'How to contact the department or find more information. Include "311" as the primary contact method.',
       ),
   }),
 

@@ -3,13 +3,14 @@ import express from "express";
 import { readFileSync } from "node:fs";
 import { AzureOpenAI } from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
-import { SYSTEM_PROMPT, PolicyConversionSchema } from "./lib/prompt.js";
+import { buildSystemPrompt, PolicyConversionSchema } from "./lib/prompt.js";
 import { validateInput, sanitizeOutput } from "./lib/sanitize.js";
 import { generatePDF } from "./lib/pdf-generator.js";
 
 // ── Branding Config ──
 
 const branding = JSON.parse(readFileSync("./branding.json", "utf-8"));
+const SYSTEM_PROMPT = buildSystemPrompt(branding);
 
 // ── Azure OpenAI Client ──
 
@@ -164,7 +165,7 @@ app.post("/api/convert", async (req, res) => {
  */
 app.post("/api/export-pdf", async (req, res) => {
   try {
-    const pdfBuffer = await generatePDF(req.body);
+    const pdfBuffer = await generatePDF(req.body, branding);
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
