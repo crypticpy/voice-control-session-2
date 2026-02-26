@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policy Plain Language Converter | Austin Public Health</title>
+  <meta name="description" content="Convert dense public health policy text into plain language for executives, staff, and the public.">
+  <link rel="icon" type="image/png" href="assets/coa-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Brand stripe -->
+  <div class="brand-stripe" aria-hidden="true"></div>
+
+  <!-- ============================================ -->
+  <!-- HEADER                                       -->
+  <!-- ============================================ -->
+  <header class="site-header" role="banner">
+    <!-- Topographic pattern overlay -->
+    <svg class="topo-lines" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 280" preserveAspectRatio="none">
+      <path d="M-20,40 Q140,15 300,40 T620,35 T940,45 T1260,35 T1460,40" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1.5"/>
+      <path d="M-20,65 Q180,42 360,68 T720,60 T1080,70 T1460,62" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      <path d="M-20,90 Q160,72 320,92 T640,85 T960,95 T1280,88 T1460,90" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1.5"/>
+      <path d="M-20,120 Q200,98 400,118 T800,112 T1200,122 T1460,115" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+      <path d="M-20,148 Q120,130 280,150 T580,142 T880,155 T1180,145 T1460,150" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1.5"/>
+      <path d="M-20,175 Q190,158 380,178 T760,170 T1140,180 T1460,172" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      <path d="M-20,200 Q150,185 300,202 T620,195 T940,205 T1260,198 T1460,200" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+      <path d="M-20,228 Q170,212 340,230 T680,222 T1020,232 T1360,225 T1460,228" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1.5"/>
+      <path d="M-20,255 Q210,240 420,258 T840,248 T1260,260 T1460,252" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </svg>
+
+    <div class="header-inner">
+      <div class="header-brand">
+        <img
+          src="assets/coa-logo.png"
+          alt="City of Austin logo"
+          class="header-logo"
+          id="headerLogo"
+        >
+        <div class="header-titles">
+          <span class="header-dept">Austin Public Health</span>
+          <h1 class="header-title">Policy Plain Language Converter</h1>
+          <p class="header-tagline">Transform dense policy text into clear, actionable language for every audience</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wave divider -->
+    <svg class="header-wave" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 48" preserveAspectRatio="none">
+      <path d="M0,48 L0,20 Q360,0 720,20 Q1080,40 1440,20 L1440,48 Z" fill="var(--aph-off-white)"/>
+    </svg>
+  </header>
+
+  <!-- ============================================ -->
+  <!-- MAIN CONTENT                                 -->
+  <!-- ============================================ -->
+  <main class="main-content" id="mainContent">
+
+    <!-- ========== INPUT SECTION ========== -->
+    <section class="input-section" id="inputSection" aria-label="Policy text input">
+      <div class="input-card">
+        <div class="input-card-header">
+          <div class="input-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h2 class="section-heading">Paste your policy text</h2>
+        </div>
+        <div class="textarea-wrapper">
+          <textarea
+            id="policyInput"
+            class="policy-textarea"
+            rows="10"
+            placeholder="Paste the full text of a public health policy, regulation, or procedure here.
+
+The tool will analyze it and produce three audience-specific versions:
+  &#8226;  Executive Summary — for leadership decision-making
+  &#8226;  Staff Briefing — for operational implementation
+  &#8226;  Public Version — plain language for community members"
+            aria-label="Policy text input"
+            maxlength="100000"
+          ></textarea>
+          <div class="textarea-footer">
+            <span class="char-count" id="charCount">0 / 100,000</span>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary btn-submit"
+          id="convertBtn"
+          aria-label="Convert policy text"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="16 16 12 12 8 16"></polyline>
+            <line x1="12" y1="12" x2="12" y2="21"></line>
+            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+          </svg>
+          Convert Policy
+        </button>
+      </div>
+    </section>
+
+    <!-- ========== LOADING STATE (hidden) ========== -->
+    <section class="loading-section hidden" id="loadingSection" aria-label="Loading" aria-live="polite">
+      <div class="loading-content">
+        <div class="loading-bars" id="spinner" role="status">
+          <div class="loading-bar bar-executive"></div>
+          <div class="loading-bar bar-staff"></div>
+          <div class="loading-bar bar-public"></div>
+          <span class="sr-only">Loading...</span>
+        </div>
+        <p class="loading-message" id="loadingMessage">Analyzing policy text for three audiences...</p>
+        <div class="loading-audiences" aria-hidden="true">
+          <span class="loading-audience la-exec">Executive</span>
+          <span class="loading-audience la-staff">Staff</span>
+          <span class="loading-audience la-public">Public</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ERROR DISPLAY (hidden) ========== -->
+    <section class="error-section hidden" id="errorSection" aria-label="Error message" aria-live="assertive">
+      <div class="error-card">
+        <div class="error-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <div class="error-body">
+          <p class="error-message" id="errorMessage">An error occurred.</p>
+          <p class="error-suggestion" id="errorSuggestion"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== WARNING BANNER (hidden) ========== -->
+    <section class="warning-section hidden" id="warningSection" aria-label="Warning" aria-live="polite">
+      <div class="warning-banner">
+        <div class="warning-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <p class="warning-message" id="warningMessage">
+          This text may not be a policy document. The results below are provided for reference, but may not follow the expected format.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========== AI DISCLAIMER (hidden) ========== -->
+    <div class="ai-disclaimer hidden" id="aiDisclaimer" aria-label="AI disclaimer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <p>AI-assisted analysis &mdash; does not replace human review</p>
+    </div>
+
+    <!-- ========== METADATA BAR (hidden) ========== -->
+    <section class="metadata-bar hidden" id="metadataBar" aria-label="Policy metadata">
+      <span class="metadata-chip" id="metaCategory">
+        <span class="metadata-label">Category</span>
+        <span class="metadata-value" id="metaCategoryValue">--</span>
+      </span>
+      <span class="metadata-chip" id="metaDate">
+        <span class="metadata-label">Effective</span>
+        <span class="metadata-value" id="metaDateValue">Not specified</span>
+      </span>
+      <span class="metadata-chip" id="metaConfidence">
+        <span class="metadata-label">Confidence</span>
+        <span class="metadata-value badge" id="metaConfidenceValue">--</span>
+      </span>
+      <span class="metadata-chip" id="metaWordCount">
+        <span class="metadata-label">Source</span>
+        <span class="metadata-value" id="metaWordCountValue">-- words</span>
+      </span>
+    </section>
+
+    <!-- ========== OUTPUT TABS (hidden) ========== -->
+    <section class="output-section hidden" id="outputSection" aria-label="Conversion results">
+
+      <!-- Tab navigation -->
+      <nav class="tab-nav" id="tabNav" role="tablist" aria-label="Output audience tabs">
+        <div class="tab-indicator" id="tabIndicator"></div>
+        <button
+          class="tab-btn active"
+          id="tabExecutive"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panelExecutive"
+          data-tab="executive"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          Executive Summary
+        </button>
+        <button
+          class="tab-btn"
+          id="tabStaff"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panelStaff"
+          data-tab="staff"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Staff Briefing
+        </button>
+        <button
+          class="tab-btn"
+          id="tabPublic"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panelPublic"
+          data-tab="public"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          Public Version
+        </button>
+      </nav>
+
+      <!-- ===== Executive Summary Panel ===== -->
+      <div
+        class="tab-panel active"
+        id="panelExecutive"
+        role="tabpanel"
+        aria-labelledby="tabExecutive"
+        data-panel="executive"
+      >
+        <div class="output-card card-executive">
+          <div class="card-accent" aria-hidden="true"></div>
+          <div class="card-audience-badge badge-executive">Leadership</div>
+          <h3 class="output-title" id="execTitle">Executive Summary</h3>
+
+          <div class="bottom-line-callout" id="execBottomLine">
+            <h4 class="callout-label">Bottom Line</h4>
+            <p class="callout-text" id="execBottomLineText">--</p>
+          </div>
+
+          <div class="risk-badge-wrapper">
+            <span class="risk-label">Risk Level</span>
+            <span class="risk-badge" id="execRiskBadge">--</span>
+          </div>
+
+          <div class="output-body">
+            <h4>Summary</h4>
+            <p id="execSummary">--</p>
+
+            <h4>Key Points</h4>
+            <ul class="key-points-list" id="execKeyPoints">
+              <li>--</li>
+            </ul>
+
+            <h4>Fiscal Impact</h4>
+            <p id="execFiscalImpact">--</p>
+
+            <h4>Recommendation</h4>
+            <p class="recommendation-text" id="execRecommendation">--</p>
+          </div>
+        </div>
+
+        <div class="action-buttons" id="execActions">
+          <button
+            type="button"
+            class="btn btn-secondary btn-copy"
+            id="copyExecutive"
+            aria-label="Copy executive summary to clipboard"
+            data-copy="executive"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copy
+          </button>
+        </div>
+      </div>
+
+      <!-- ===== Staff Briefing Panel ===== -->
+      <div
+        class="tab-panel"
+        id="panelStaff"
+        role="tabpanel"
+        aria-labelledby="tabStaff"
+        data-panel="staff"
+        hidden
+      >
+        <div class="output-card card-staff">
+          <div class="card-accent" aria-hidden="true"></div>
+          <div class="card-audience-badge badge-staff">Operations</div>
+          <h3 class="output-title" id="staffTitle">Staff Briefing</h3>
+
+          <div class="output-body">
+            <h4>Overview</h4>
+            <p id="staffOverview">--</p>
+
+            <h4>Key Changes</h4>
+            <div class="table-wrapper">
+              <table class="key-changes-table" id="staffKeyChangesTable">
+                <thead>
+                  <tr>
+                    <th scope="col">Area</th>
+                    <th scope="col">Current State</th>
+                    <th scope="col">New State</th>
+                    <th scope="col">Action Required</th>
+                  </tr>
+                </thead>
+                <tbody id="staffKeyChangesBody">
+                  <tr>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4>Implementation Steps</h4>
+            <ol class="implementation-steps" id="staffImplementationSteps">
+              <li>--</li>
+            </ol>
+
+            <h4>Timeline</h4>
+            <p id="staffTimeline">--</p>
+
+            <h4>Affected Teams</h4>
+            <div class="affected-teams" id="staffAffectedTeams">
+              <span class="team-chip">--</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-buttons" id="staffActions">
+          <button
+            type="button"
+            class="btn btn-secondary btn-copy"
+            id="copyStaff"
+            aria-label="Copy staff briefing to clipboard"
+            data-copy="staff"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copy
+          </button>
+        </div>
+      </div>
+
+      <!-- ===== Public Version Panel ===== -->
+      <div
+        class="tab-panel"
+        id="panelPublic"
+        role="tabpanel"
+        aria-labelledby="tabPublic"
+        data-panel="public"
+        hidden
+      >
+        <div class="output-card card-public">
+          <div class="card-accent" aria-hidden="true"></div>
+          <div class="card-audience-badge badge-public">Community</div>
+          <h3 class="output-title" id="publicTitle">Public Version</h3>
+
+          <div class="output-body">
+            <h4>What Is This?</h4>
+            <p id="publicWhatIsThis">--</p>
+
+            <h4>Why It Matters</h4>
+            <p id="publicWhyItMatters">--</p>
+
+            <h4>Key Takeaways</h4>
+            <ul class="key-takeaways-list" id="publicKeyTakeaways">
+              <li>--</li>
+            </ul>
+
+            <h4>What You Can Do</h4>
+            <ul class="what-you-can-do-list" id="publicWhatYouCanDo">
+              <li>--</li>
+            </ul>
+
+            <h4>Where to Get Help</h4>
+            <p id="publicWhereToGetHelp">--</p>
+          </div>
+        </div>
+
+        <div class="action-buttons" id="publicActions">
+          <button
+            type="button"
+            class="btn btn-secondary btn-copy"
+            id="copyPublic"
+            aria-label="Copy public version to clipboard"
+            data-copy="public"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copy
+          </button>
+        </div>
+      </div>
+
+      <!-- ===== Export PDF Button ===== -->
+      <div class="export-actions hidden" id="exportActions">
+        <button
+          type="button"
+          class="btn btn-primary btn-export"
+          id="exportPdfBtn"
+          aria-label="Export all versions as PDF"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Export PDF Report
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ============================================ -->
+  <!-- FOOTER                                       -->
+  <!-- ============================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-org">City of Austin</span>
+        <span class="footer-divider" aria-hidden="true"></span>
+        <span class="footer-dept">Austin Public Health</span>
+      </div>
+      <p class="footer-disclaimer">AI-assisted tool for internal use. All outputs require human review before distribution.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
