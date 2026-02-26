@@ -1,0 +1,18 @@
+{
+  "organizationName": "City of Austin",
+  "departmentName": "Austin Public Health",
+  "appTitle": "Policy Plain Language Converter",
+  "tagline": "Transform dense policy text into clear, actionable language for every audience",
+  "logoPath": "assets/coa-logo.png",
+  "logoAlt": "City of Austin logo",
+  "faviconPath": "assets/coa-icon.png",
+  "footerDisclaimer": "AI-assisted tool for internal use. All outputs require human review before distribution.",
+  "colors": {
+    "primary": "#003054",
+    "primaryDark": "#001f38",
+    "accent": "#007B83",
+    "accentDark": "#006269",
+    "accentLight": "#5EC6C3",
+    "highlight": "#78BE20"
+  }
+}

@@ -32,7 +32,9 @@ This workshop walks through a structured 7-phase methodology for building softwa
 │   ├── server.js                  # Express server with Azure OpenAI integration
 │   ├── package.json               # Node.js dependencies
 │   ├── .env.template              # Environment variable template
+│   ├── branding.json              # Customizable branding config (see below)
 │   ├── public/                    # Frontend (vanilla JS)
+│   │   └── assets/                # Logos, favicon — drop your own here
 │   ├── lib/                       # Server-side modules (PDF, prompts, sanitization)
 │   ├── style-guide/               # APH brand guidelines and assets
 │   ├── PRD.md                     # Product Requirements Document
@@ -76,6 +78,37 @@ You'll need an Azure OpenAI resource with a deployed model. Update your `.env` w
 - `AZURE_OPENAI_ENDPOINT` — Your resource endpoint URL
 - `AZURE_OPENAI_DEPLOYMENT` — Your model deployment name
 - `AZURE_OPENAI_API_VERSION` — API version (default: `2024-12-01-preview`)
+
+### Customize Branding for Your Agency
+
+The demo is designed to be re-branded in under 5 minutes. Edit `branding.json` in the demo root:
+
+```jsonc
+{
+  "organizationName": "Your Organization", // Footer org name
+  "departmentName": "Your Department", // Header + footer department
+  "appTitle": "Policy Plain Language Converter", // Page title + header
+  "tagline": "Your custom tagline here", // Subtitle under the title
+  "logoPath": "assets/your-logo.png", // Relative to public/
+  "logoAlt": "Your org logo", // Alt text for accessibility
+  "faviconPath": "assets/your-icon.png", // Browser tab icon
+  "footerDisclaimer": "Your disclaimer text.", // Footer fine print
+  "colors": {
+    "primary": "#003054", // Header background, headings, executive accent
+    "primaryDark": "#001f38", // Footer background, deep header gradient
+    "accent": "#007B83", // Buttons, links, staff accent, focus rings
+    "accentDark": "#006269", // Button hover states
+    "accentLight": "#5EC6C3", // Department label color, gradient endpoints
+    "highlight": "#78BE20", // Public version accent, success states
+  },
+}
+```
+
+**To swap logos:** Drop your logo and icon into `demo/public/assets/` and update the paths in `branding.json`. Any image format works (PNG, SVG, etc.). The header logo displays at 56px height, so a horizontal logo around 200x56px works well.
+
+**To change colors:** Update the hex values in the `colors` object. The entire UI (header, buttons, cards, badges, gradients) updates automatically — no CSS editing needed.
+
+**No restart required for color/text changes** — just refresh the browser. If you change `branding.json` while the server is running, restart the server (`npm start`) to pick up the new config.
 
 ## Audience
 

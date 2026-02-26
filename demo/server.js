@@ -1,10 +1,15 @@
 import "dotenv/config";
 import express from "express";
+import { readFileSync } from "node:fs";
 import { AzureOpenAI } from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { SYSTEM_PROMPT, PolicyConversionSchema } from "./lib/prompt.js";
 import { validateInput, sanitizeOutput } from "./lib/sanitize.js";
 import { generatePDF } from "./lib/pdf-generator.js";
+
+// ── Branding Config ──
+
+const branding = JSON.parse(readFileSync("./branding.json", "utf-8"));
 
 // ── Azure OpenAI Client ──
 
@@ -29,6 +34,13 @@ app.use(express.static("public"));
  */
 app.get("/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
+/**
+ * GET /api/branding — Serve branding config for frontend customization
+ */
+app.get("/api/branding", (_req, res) => {
+  res.json(branding);
 });
 
 /**

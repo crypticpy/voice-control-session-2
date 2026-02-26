@@ -610,11 +610,102 @@
   }
 
   // ------------------------------------------
+  // Branding
+  // ------------------------------------------
+
+  function applyBranding(b) {
+    if (!b) return;
+
+    // Text content
+    if (b.appTitle) {
+      document.title =
+        b.appTitle + (b.departmentName ? " | " + b.departmentName : "");
+      var headerTitle = document.querySelector(".header-title");
+      if (headerTitle) headerTitle.textContent = b.appTitle;
+    }
+    if (b.departmentName) {
+      var headerDept = document.querySelector(".header-dept");
+      if (headerDept) headerDept.textContent = b.departmentName;
+      var footerDept = document.querySelector(".footer-dept");
+      if (footerDept) footerDept.textContent = b.departmentName;
+    }
+    if (b.organizationName) {
+      var footerOrg = document.querySelector(".footer-org");
+      if (footerOrg) footerOrg.textContent = b.organizationName;
+    }
+    if (b.tagline) {
+      var headerTagline = document.querySelector(".header-tagline");
+      if (headerTagline) headerTagline.textContent = b.tagline;
+    }
+    if (b.footerDisclaimer) {
+      var footerDisclaimer = document.querySelector(".footer-disclaimer");
+      if (footerDisclaimer) footerDisclaimer.textContent = b.footerDisclaimer;
+    }
+
+    // Logo and favicon
+    if (b.logoPath) {
+      var logo = document.getElementById("headerLogo");
+      if (logo) {
+        logo.src = b.logoPath;
+        if (b.logoAlt) logo.alt = b.logoAlt;
+      }
+    }
+    if (b.faviconPath) {
+      var favicon = document.querySelector('link[rel="icon"]');
+      if (favicon) favicon.href = b.faviconPath;
+    }
+
+    // Colors — override CSS custom properties
+    if (b.colors) {
+      var root = document.documentElement.style;
+      if (b.colors.primary) {
+        root.setProperty("--aph-navy", b.colors.primary);
+        root.setProperty("--accent-executive", b.colors.primary);
+      }
+      if (b.colors.primaryDark) {
+        root.setProperty("--aph-navy-deep", b.colors.primaryDark);
+      }
+      if (b.colors.accent) {
+        root.setProperty("--aph-teal", b.colors.accent);
+        root.setProperty(
+          "--aph-teal-dark",
+          b.colors.accentDark || b.colors.accent,
+        );
+        root.setProperty("--accent-staff", b.colors.accent);
+      }
+      if (b.colors.accentDark) {
+        root.setProperty("--aph-teal-dark", b.colors.accentDark);
+      }
+      if (b.colors.accentLight) {
+        root.setProperty("--aph-light-teal", b.colors.accentLight);
+      }
+      if (b.colors.highlight) {
+        root.setProperty("--aph-green", b.colors.highlight);
+        root.setProperty("--accent-public", b.colors.highlight);
+      }
+    }
+  }
+
+  function loadBranding() {
+    fetch("/api/branding")
+      .then(function (res) {
+        if (res.ok) return res.json();
+      })
+      .then(applyBranding)
+      .catch(function () {
+        // Branding fetch failed — use HTML defaults silently
+      });
+  }
+
+  // ------------------------------------------
   // Initialize on DOMContentLoaded
   // ------------------------------------------
 
   document.addEventListener("DOMContentLoaded", function () {
     cacheElements();
+
+    // Apply branding from config
+    loadBranding();
 
     // Character count on input
     els.policyInput.addEventListener("input", updateCharCount);
